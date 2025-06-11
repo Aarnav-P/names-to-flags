@@ -1,4 +1,0 @@
-runtime: python312
-
-entrypoint: gunicorn -w 2 -k gthread -b :$PORT "names_to_flags:create_app()"
-
