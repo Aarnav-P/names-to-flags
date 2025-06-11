@@ -225,21 +225,21 @@ if st.button("🎨 Generate Flag", type="primary"):
                     mime="image/png"
                 )
             
-            # Show color information
-            with st.expander("🎨 Color Details"):
-                st.write(f"**Number of stripes:** {len(flattened_hexstring)}")
-                st.write("**Colors (hex codes):**")
-                cols = st.columns(min(len(flattened_hexstring), 6))
-                for i, color in enumerate(flattened_hexstring):
-                    col_idx = i % 6
-                    with cols[col_idx]:
-                        st.markdown(
-                            f'<div style="background-color: #{color}; height: 30px; margin: 2px; border-radius: 3px;"></div>',
-                            unsafe_allow_html=True
-                        )
-                        st.caption(f"#{color}")
-            
-            plt.close(fig)  # Clean up
+                # Show color information
+                with st.expander("🎨 Color Details"):
+                    st.write(f"**Number of stripes:** {len(flattened_hexstring)}")
+                    st.write("**Colors (hex codes):**")
+                    cols = st.columns(min(len(flattened_hexstring), 6))
+                    for i, color in enumerate(flattened_hexstring):
+                        col_idx = i % 6
+                        with cols[col_idx]:
+                            st.markdown(
+                                f'<div style="background-color: #{color}; height: 30px; margin: 2px; border-radius: 3px;"></div>',
+                                unsafe_allow_html=True
+                            )
+                            st.caption(f"#{color}")
+                
+                plt.close(fig)  # Clean up
             
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
