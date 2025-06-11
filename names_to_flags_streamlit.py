@@ -8,7 +8,7 @@ from PIL import Image
 
 # Configure page
 st.set_page_config(
-    page_title="Name to Flag Generator",
+    page_title="Name to Flag Converter",
     page_icon="🏳️",
     layout="centered"
 )
@@ -141,11 +141,11 @@ def fig_to_bytes(fig):
     return buf.getvalue()
 
 # Streamlit UI
-st.title("🏳️ Name to Flag Generator")
+st.title("🏳️ Name to Flag Converter")
 st.markdown("Transform any name into a unique flag using hexadecimal color conversion!")
 
 # Information expander
-with st.expander("ℹ️ How it works & Tips"):
+with st.expander("How it works & Tips"):
     st.markdown("""
     **How it works:**
     1. Your input text is converted to hexadecimal values
@@ -153,11 +153,11 @@ with st.expander("ℹ️ How it works & Tips"):
     3. Each name gets a deterministic, unique flag
     
     **Tips:**
-    - The program is **case-sensitive** (Aaron ≠ aaron)
+    - The program is **case-sensitive** (Merlin ≠ merlin)
     - Names are separated by spaces
-    - Use underscores to join words (Aaron_Burr vs Aaron Burr)
+    - Use underscores to join words (Eugene_Wigner vs Eugene Wigner)
     - Works with any characters, numbers, and symbols
-    - Different scripts may produce more colors
+    - Different writing systems may produce more colors
     - Try usernames, phrases, or any text!
     """)
 
@@ -165,10 +165,10 @@ with st.expander("ℹ️ How it works & Tips"):
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    name_input = st.text_input("Enter a name or text:", placeholder="e.g., John Doe, 龍, User123")
+    name_input = st.text_input("Enter a name or text:", placeholder="e.g., John Smith, ଆର୍ନଭ୍ ପଣ୍ଡା, User123")
 
 with col2:
-    encoding_mode = st.selectbox("Encoding method:", ["unicode", "utf-8"])
+    encoding_mode = st.selectbox("Encoding method:", ["Unicode", "utf-8"])
 
 # Options section
 st.subheader("Flag Options")
