@@ -187,8 +187,11 @@ with col5:
         brighten_amount = 0
 
 # Generate flag
-if st.button("🎨 Generate Flag", type="primary") and name_input:
-    with st.spinner("Creating your unique flag..."):
+if st.button("🎨 Generate Flag", type="primary"):
+    if not name_input:
+        st.warning("Please enter a name or text first!")
+    else:
+        with st.spinner("Creating your unique flag..."):
         try:
             # Convert to hex
             hexstring, seed_string = string_to_hex(name_input, encoding_mode)
@@ -238,12 +241,9 @@ if st.button("🎨 Generate Flag", type="primary") and name_input:
             
             plt.close(fig)  # Clean up
             
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-            st.error("Please check your input and try again.")
-
-elif not name_input and st.button("🎨 Generate Flag", type="primary"):
-    st.warning("Please enter a name or text first!")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
+                st.error("Please check your input and try again.")
 
 # Footer
 st.markdown("---")
