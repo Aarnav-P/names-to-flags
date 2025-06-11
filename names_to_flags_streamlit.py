@@ -183,6 +183,7 @@ with col4:
 with col5:
     if brighten_flag:
         brighten_amount = st.slider("Brightness boost:", 0, 100, 30)
+        help="Increase to make the flag’s colors lighter (0 = no change)"
     else:
         brighten_amount = 0
 
