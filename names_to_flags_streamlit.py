@@ -192,38 +192,38 @@ if st.button("🎨 Generate Flag", type="primary"):
         st.warning("Please enter a name or text first!")
     else:
         with st.spinner("Creating your unique flag..."):
-        try:
-            # Convert to hex
-            hexstring, seed_string = string_to_hex(name_input, encoding_mode)
-            
-            # Generate filler
-            filler_string = generate_random_output(seed_string, 5)
-            
-            # Process hex strings
-            split_hexstring = split_into_chunks(hexstring, 6)
-            finished_hexstring = fill_colour_blocks(split_hexstring, filler_string)
-            
-            # Apply brightening if requested
-            if brighten_flag and brighten_amount > 0:
-                finished_hexstring = brighten(finished_hexstring, brighten_amount)
-            
-            # Flatten and create image
-            flattened_hexstring = flatten(finished_hexstring)
-            
-            # Create the flag
-            fig = create_flag_image(flattened_hexstring, name_input, stripe_direction)
-            
-            # Display the flag
-            st.pyplot(fig)
-            
-            # Download button
-            img_bytes = fig_to_bytes(fig)
-            st.download_button(
-                label="📥 Download Flag (PNG)",
-                data=img_bytes,
-                file_name=f"{name_input.replace(' ', '_')}_flag.png",
-                mime="image/png"
-            )
+            try:
+                # Convert to hex
+                hexstring, seed_string = string_to_hex(name_input, encoding_mode)
+                
+                # Generate filler
+                filler_string = generate_random_output(seed_string, 5)
+                
+                # Process hex strings
+                split_hexstring = split_into_chunks(hexstring, 6)
+                finished_hexstring = fill_colour_blocks(split_hexstring, filler_string)
+                
+                # Apply brightening if requested
+                if brighten_flag and brighten_amount > 0:
+                    finished_hexstring = brighten(finished_hexstring, brighten_amount)
+                
+                # Flatten and create image
+                flattened_hexstring = flatten(finished_hexstring)
+                
+                # Create the flag
+                fig = create_flag_image(flattened_hexstring, name_input, stripe_direction)
+                
+                # Display the flag
+                st.pyplot(fig)
+                
+                # Download button
+                img_bytes = fig_to_bytes(fig)
+                st.download_button(
+                    label="📥 Download Flag (PNG)",
+                    data=img_bytes,
+                    file_name=f"{name_input.replace(' ', '_')}_flag.png",
+                    mime="image/png"
+                )
             
             # Show color information
             with st.expander("🎨 Color Details"):
