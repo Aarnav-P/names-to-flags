@@ -1,8 +1,9 @@
 # Personal_Flags
 The goal of this project is to create a deployment of a python program into a web application.  
 The motivation is that I had a fun idea, and it would be nice to learn how to create web apps for future fun ideas.  
-The work started around July '25, and I have decided to put it on Git.  
-  
+The work started around July '24, and I have decided to put it on Git.  
+
+--- FLASK (main branch) ---
 Progress:  
 \> Basic website has been built   
 \> html structure is created, with parent and child templates  
@@ -17,3 +18,6 @@ Next Steps:
 \> Add styling to inputs - sliders and buttons etc.  
 \> Add saving functionality, buttons to change image output format  
 \> Add basic security to website.  
+
+--- Streamlit (side-branch) ---
+\> TBC
