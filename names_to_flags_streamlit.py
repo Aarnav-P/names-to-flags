@@ -412,7 +412,7 @@ with col1:
 
 with col2:
     tooltip_html = create_tooltip("Unicode: Uses character code points. UTF-8: Uses byte encoding.")
-    st.markdown(f'<div style="margin-top: 1.8rem"><strong>Encoding standard</strong> {tooltip_html}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="margin-top: 0rem"><strong>Encoding standard</strong> {tooltip_html}</div>', unsafe_allow_html=True)
     encoding_mode = st.selectbox("", ["Unicode", "UTF-8"], label_visibility="collapsed")
     
 st.markdown('</div>', unsafe_allow_html=True)
