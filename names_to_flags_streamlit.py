@@ -654,8 +654,9 @@ with st.expander("How it works & Tips"):
     """)
 
 # Input section with better layout
-st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('<h3 style="margin-bottom: 0.5rem;">Enter your name</h3>', unsafe_allow_html=True)
+with st.container():
+    st.markdown('<h3 style="margin-bottom: 0.5rem; color: white;">Enter your name</h3>', unsafe_allow_html=True)
+
 col1, col2 = st.columns([2, 1])
 
 with col1:
