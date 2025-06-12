@@ -340,7 +340,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
     
     ax.axis('off')
     ax.imshow(flag)
-    ax.set_title(f'Flag for: {name}', color='black', fontsize=16, pad=20)  # Changed to black
+    ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)  
     
     plt.tight_layout()
     return fig
