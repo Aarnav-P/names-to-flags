@@ -673,9 +673,9 @@ with col2:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
-st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('<h3 style="margin-bottom: 0;">Flag Customization</h3>', unsafe_allow_html=True)
-st.markdown('<p style="font-style: italic; font-size: 0.9rem; margin-bottom: 1rem;">More flag designs coming soon!</p>', unsafe_allow_html=True)
+with st.container(): 
+    st.markdown('<h3 style="margin-bottom: 0;">Flag Customization</h3>', unsafe_allow_html=True)
+    st.markdown('<p style="font-style: italic; font-size: 0.9rem; margin-bottom: 1rem;">More flag designs coming soon!</p>', unsafe_allow_html=True)
 
 # First row of options
 col3, col4, col5 = st.columns(3)
@@ -825,17 +825,17 @@ if not name_input:
     st.markdown("Click any example to see how different inputs create unique flags:")
     
     examples = [
-        ("Nico", "Unite all Nico's under a flag!"),
-        ("Leonhard_Euler", "Full name"), 
-        ("織田 信長", "Non-English scripts"),
-        ("User123", "Username with numbers"),
-        ("⛰️😸☕", "Emojis work too!")
+        "Nico",
+        "Leonhard_Euler",  
+        "織田 信長",
+        "User123", 
+        "⛰️😸☕"
     ]
     
-    cols = st.columns(3)
-    for i, (example, description) in enumerate(examples):
-        with cols[i % 3]:
-            if st.button(f"**{example}**\n{description}", key=f"example_{i}", use_container_width=True):
+    cols = st.columns(2)
+    for i, example in enumerate(examples):
+        with cols[i % 2]:
+            if st.button(f"**{example}**", key=f"example_{i}", use_container_width=True):
                 st.experimental_set_query_params(example=example)
                 st.rerun()
 
