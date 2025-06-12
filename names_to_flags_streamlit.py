@@ -82,6 +82,32 @@ st.markdown("""
         margin: 0.5rem;
     }
     
+    /* Make input fields dark themed */
+    div[data-baseweb="input"] {
+        background-color: #2d2d2d !important;
+        border-radius: 10px !important;
+    }
+    
+    input {
+        background-color: #2d2d2d !important;
+        color: #f8f8f8 !important;
+    }
+    
+    textarea {
+        background-color: #2d2d2d !important;
+        color: #f8f8f8 !important;
+    }
+    
+    .stTextInput > div > div > input {
+        background-color: #2d2d2d !important;
+        color: #f8f8f8 !important;
+    }
+    
+    .stSelectbox > div > div {
+        background-color: #2d2d2d !important;
+        color: #f8f8f8 !important;
+    }
+
     .footer-style {
     text-align: center;
     padding: 2.5rem;
@@ -599,8 +625,8 @@ with st.expander("How it works & Tips"):
 
 # Input section with better layout
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="panda-subtitle">Enter your name</h3>', unsafe_allow_html=True)
-col1, col2 = st.columns([3, 1])
+st.markdown('<h3 style="margin-bottom: 0.5rem;">Enter your name</h3>', unsafe_allow_html=True)
+col1, col2 = st.columns([2, 1])
 
 with col1:
     name_input = st.text_input(
@@ -609,15 +635,16 @@ with col1:
     )
 
 with col2:
-    st.markdown("**Encoding method:**" + create_tooltip("Unicode: Each character becomes a hex value based on its Unicode code point. UTF-8: Characters are encoded as bytes then converted to hex."), unsafe_allow_html=True)
+    st.markdown('<div style="margin-top: 1.8rem">', unsafe_allow_html=True)
     encoding_mode = st.selectbox("", ["Unicode", "UTF-8"], label_visibility="collapsed")
-
+    st.markdown('</div>', unsafe_allow_html=True)
+    
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="panda-subtitle">Flag Customization</h3>')
-st.markdown('<h4 class="panda-italic">More flag designs coming soon!</h4>')
+st.markdown('Flag Customization')
+st.markdown('<h4 style="font-style: italic; margin-top: 0;">More flag designs coming soon!</h4>')
 # First row of options
 col3, col4, col5 = st.columns(3)
 
