@@ -39,7 +39,7 @@ st.markdown("""
     .main-header {
         text-align: center;
         padding: 2.5rem 1rem;
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-white) 100%);
         border-radius: 20px;
         margin-bottom: 2rem;
         color: var(--panda-white);
@@ -807,8 +807,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="panda-subtitle">"Flag Customization"</h3>')
-st.markdown('<h4 class="panda-italic">"More flag designs coming soon!"</h4>')
+st.markdown('<h3 class="panda-subtitle">Flag Customization</h3>')
+st.markdown('<h4 class="panda-italic">More flag designs coming soon!</h4>')
 # First row of options
 col3, col4, col5 = st.columns(3)
 
