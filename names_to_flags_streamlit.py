@@ -295,7 +295,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
     
     ax.axis('off')
     ax.imshow(flag)
-    ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)
+    ax.set_title(f'Flag of {name}', color='white', fontsize=16, pad=20)
     
     plt.tight_layout()
     return fig
@@ -330,39 +330,38 @@ def get_color_stats(flattened_hexstring):
 # Main App
 st.markdown("""
 <div class="main-header">
-    <h1>🏳️ Name to Flag Converter</h1>
-    <p>Transform any name into a unique flag using hexadecimal color conversion!</p>
+    <h1>Name to Flag Converter</h1>
+    <p>Transform any name into a unique flag!</p>
 </div>
 """, unsafe_allow_html=True)
 
 # Information expander with enhanced content
-with st.expander("📚 How it works & Pro Tips"):
+with st.expander("How it works & Tips"):
     st.markdown("""
     **How it works:**
     1. Your input text is converted to hexadecimal values using Unicode or UTF-8 encoding
     2. These hex values become RGB color codes for flag elements
-    3. Each input gets a deterministic, unique flag design
-    4. Additional visual effects and patterns can be applied
+    3. Each input gets a deterministic, unique flag design - your flag is always the same!
+    4. Additional visual effects and patterns can be applied, but you will lose uniquity.
     
     **Pro Tips:**
-    - 🔤 **Case-sensitive**: "Merlin" ≠ "merlin" (different flags!)
-    - 🔗 **Join words**: Use underscores (Eugene_Wigner vs Eugene Wigner)
-    - 🌍 **Unicode magic**: Different writing systems create more diverse colors
-    - 🎨 **Experiment**: Try usernames, phrases, dates, or any text
-    - 🎲 **Reproducible**: Same input always creates the same flag
-    - ⚡ **Performance**: Longer names = more colors = more detailed flags
+    - **Case-sensitive**: "Merlin" ≠ "merlin" (different flags!)
+    - **Join words**: Use underscores (Eugene_Wigner vs Eugene Wigner)
+    - **Non-english script**: Different writing systems will likely create more colors
+    - **Try**: usernames, phrases, dates, or any text
+    - **Reproducible**: Same input always creates the same flag
     """)
 
 # Input section with better layout
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.subheader("🎯 Your Input")
+st.subheader("Enter your name")
 
 col1, col2 = st.columns([3, 1])
 
 with col1:
     name_input = st.text_input(
         "Enter a name or text:", 
-        placeholder="e.g., John Smith, ଆର୍ନଭ୍ ପଣ୍ଡା, User123, My_Cool_Project"
+        placeholder="e.g., Robert_Fripp, ଆର୍ନଭ୍_ପଣ୍ଡା, King_of_Pirates"
     )
 
 with col2:
@@ -373,8 +372,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.subheader("🎨 Flag Customization")
-
+st.subheader("Flag Customization")
+st.markdown("__More flag designs coming soon!__")
 # First row of options
 col3, col4, col5 = st.columns(3)
 
@@ -463,7 +462,7 @@ if generate_button:
                     )
                 
                 # Stats cards
-                st.subheader("📊 Flag Statistics")
+                st.subheader("Flag Statistics")
                 stat_col1, stat_col2, stat_col3 = st.columns(3)
                 
                 with stat_col1:
@@ -491,7 +490,7 @@ if generate_button:
                     """, unsafe_allow_html=True)
                 
                 # Enhanced color information
-                with st.expander("🎨 Detailed Color Analysis"):
+                with st.expander("Flag Analysis"):
                     st.write(f"**Generated from:** {len(hexstring)} word(s)")
                     st.write(f"**Total colors:** {len(flattened_hexstring)} stripes")
                     st.write(f"**Average brightness:** {color_stats['avg_brightness']:.1f}/255")
@@ -543,8 +542,8 @@ st.markdown("---")
 st.markdown("""
 <div class="footer-style">
     <h4>🎨 About This Tool</h4>
-    <p>Every name has a unique digital fingerprint. This tool converts that fingerprint into beautiful, reproducible flag designs.</p>
-    <p>Made with ❤️ using Streamlit • <a href="#" target="_blank">☕ Support the developer</a></p>
-    <p><small>Pro tip: Bookmark interesting flag combinations by saving the URL!</small></p>
+    <p>Every name is unique. This website converts your lexical fingerprint into a flag to show off.</p>
+    <p>Made using Streamlit • <a href="#" target="_blank">☕ Donate if you enjoy your flag :) </a></p>
+    <p><small>Tip: Bookmark your favourite flags by saving the URL!</small></p>
 </div>
 """, unsafe_allow_html=True)
