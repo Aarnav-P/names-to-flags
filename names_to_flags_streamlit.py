@@ -17,91 +17,40 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* Import Google Fonts for better typography options */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap');
-    
-    /* Global theme - Panda colors */
-    :root {
-        --panda-black: #2d2d2d;
-        --panda-white: #f8f8f8;
-        --panda-light-gray: #e8e8e8;
-        --panda-dark-gray: #4a4a4a;
-        --panda-accent: #1a1a1a;
-    }
-    
-    
-    /* Main app background */
-    .main .block-container {
-        background: linear-gradient(135deg, var(--panda-white) 0%, var(--panda-light-gray) 100%);
-        padding-top: 2rem;
-    }
-    
+  
     .main-header {
         text-align: center;
-        padding: 2.5rem 1rem;
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-white) 100%);
-        border-radius: 20px;
+        padding: 2rem 0;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
         margin-bottom: 2rem;
-        color: var(--panda-white);
-        box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
-        border: 2px solid var(--panda-accent);
-    }
-  .main-header h1 {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    .main-header p {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 1.1rem;
-        opacity: 0.9;
-        font-style: italic;
+        color: white;
     }
     
     .info-tooltip {
         position: relative;
         display: inline-block;
         cursor: help;
-        color: var(--panda-accent);
-        margin-left: 8px;
-        font-size: 1rem;
+        color: #1f77b4;
+        margin-left: 5px;
     }
     
     .info-tooltip .tooltiptext {
         visibility: hidden;
-        width: 250px;
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
-        color: var(--panda-white);
+        width: 200px;
+        background-color: #333;
+        color: #fff;
         text-align: center;
-        border-radius: 8px;
-        padding: 12px;
+        border-radius: 6px;
+        padding: 8px;
         position: absolute;
-        z-index: 1000;
+        z-index: 1;
         bottom: 125%;
         left: 50%;
-        margin-left: -125px;
-        font-size: 13px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
+        margin-left: -100px;
+        font-size: 12px;
         opacity: 0;
-        transition: opacity 0.3s ease;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        border: 1px solid var(--panda-accent);
-    }
-    
-    .info-tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: var(--panda-black) transparent transparent transparent;
+        transition: opacity 0.3s;
     }
     
     .info-tooltip:hover .tooltiptext {
@@ -110,178 +59,35 @@ st.markdown("""
     }
     
     .option-container {
-        background: linear-gradient(135deg, var(--panda-white) 0%, var(--panda-light-gray) 50%);
-        padding: 2rem;
-        border-radius: 15px;
-        margin: 1.5rem 0;
-        border-left: 5px solid var(--panda-black);
-        box-shadow: 0 4px 15px rgba(45, 45, 45, 0.1);
-        border: 1px solid var(--panda-light-gray);
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        border-left: 4px solid #1f77b4;
     }
     
     .color-preview {
-        border: 2px solid var(--panda-dark-gray);
-        border-radius: 8px;
-        margin: 3px;
-        box-shadow: 0 3px 8px rgba(45, 45, 45, 0.2);
-        transition: transform 0.2s ease;
-    }
-    
-    .color-preview:hover {
-        transform: scale(1.05);
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        margin: 2px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .stats-card {
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        color: var(--panda-white);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
+        border-radius: 10px;
+        color: white;
         text-align: center;
         margin: 0.5rem;
-        box-shadow: 0 6px 20px rgba(45, 45, 45, 0.3);
-        border: 2px solid var(--panda-accent);
-        transition: transform 0.2s ease;
-    }
-    
-    .stats-card:hover {
-        transform: translateY(-2px);
-    }
-    
-    .stats-card h3 {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-        color: var(--panda-white);
-    }
-    
-    .stats-card p {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin: 0;
-        font-style: italic;
     }
     
     .footer-style {
         text-align: center;
-        padding: 2.5rem;
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
-        border-radius: 20px;
-        margin-top: 3rem;
-        color: var(--panda-white);
-        box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
-        border: 2px solid var(--panda-accent);
-    }
-    
-    .footer-style h4 {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-        color: var(--panda-white);
-    }
-    
-    .footer-style p {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        margin-bottom: 0.8rem;
-        line-height: 1.6;
-    }
-    
-    .footer-style a {
-        color: var(--panda-light-gray);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
-    }
-    
-    .footer-style a:hover {
-        color: var(--panda-white);
-        text-decoration: underline;
-    }
-    
-    .footer-style small {
-        font-style: italic;
-        opacity: 0.8;
-    }
-    
-    /* Streamlit component styling */
-    .stSelectbox label, .stTextInput label, .stSlider label {
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        color: var(--panda-accent) !important;
-    }
-    
-    .stButton > button {
-        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%) !important;
-        color: var(--panda-white) !important;
-        border: 2px solid var(--panda-accent) !important;
-        border-radius: 10px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 600 !important;
-        padding: 0.75rem 1.5rem !important;
-        transition: all 0.2s ease !important;
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 15px rgba(45, 45, 45, 0.3) !important;
-    }
-    
-    /* Fix for stats container centering */
-    .stats-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
-    }
-    
-    /* Remove weird spacing */
-    .element-container {
-        margin-bottom: 0 !important;
-    }
-    
-    /* Typography classes for easy customization */
-    .panda-title {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 2rem;
-        color: var(--panda-black);
-    }
-    
-    .panda-subtitle {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 1.3rem;
-        color: var(--panda-dark-gray);
-    }
-    
-    .panda-body {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 1rem;
-        color: var(--panda-accent);
-        line-height: 1.6;
-    }
-    
-    .panda-code {
-        font-family: 'Fira Code', monospace;
-        font-weight: 400;
-        background: var(--panda-light-gray);
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-        border: 1px solid var(--panda-dark-gray);
-    }
-    
-    .panda-italic {
-        font-style: italic;
-    }
-    
-    .panda-bold {
-        font-weight: 700;
+        padding: 2rem;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 2rem;
     }
 </style>
 """, unsafe_allow_html=True)
