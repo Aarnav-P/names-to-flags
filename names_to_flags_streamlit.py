@@ -108,6 +108,36 @@ st.markdown("""
         color: #f8f8f8 !important;
     }
 
+    /* Global dark background for all inputs */
+    div.stTextInput > div > div {
+        background-color: #2d2d2d !important;
+        border: 1px solid #444 !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+    
+    div.stSelectbox > div > div {
+        background-color: #2d2d2d !important;
+        border: 1px solid #444 !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+    
+    div[data-testid="stForm"] {
+        background-color: transparent !important;
+    }
+    
+    /* Remove global box shadows for a cleaner dark theme */
+    input, select, textarea {
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    /* Optional: darken the whole app container */
+    .css-18e3th9 {
+        background-color: #121212 !important;
+    }
+
     .footer-style {
     text-align: center;
     padding: 2.5rem;
@@ -651,11 +681,11 @@ col3, col4, col5 = st.columns(3)
 
 with col3:
     st.markdown("**Stripe direction:**" + create_tooltip("Horizontal: Colors stack vertically. Vertical: Colors stack horizontally."), unsafe_allow_html=True)
-    stripe_direction = st.selectbox("", ["horizontal", "vertical"], label_visibility="collapsed")
+    stripe_direction = st.selectbox("", ["Horizontal", "Vertical"], label_visibility="collapsed")
 
 with col4:
     st.markdown("**Flag pattern:**" + create_tooltip("Stripes: Traditional flag stripes. Checkerboard: Chess-like pattern. Diagonal: Angled color bands."), unsafe_allow_html=True)
-    flag_pattern = st.selectbox("", ["stripes", "checkerboard", "diagonal"], label_visibility="collapsed")
+    flag_pattern = st.selectbox("", ["Stripes", "Checkerboard", "Diagonal"], label_visibility="collapsed")
 
 with col5:
     st.markdown("**Color adjustments:**" + create_tooltip("Choose how to modify the generated colors for better visibility."), unsafe_allow_html=True)
@@ -790,16 +820,15 @@ if generate_button:
 
 # Sample examples with better presentation
 if not name_input:
-    st.subheader("✨ Try these examples:")
+    st.subheader("Try these examples:")
     st.markdown("Click any example to see how different inputs create unique flags:")
     
     examples = [
-        ("Alice", "Simple name"),
-        ("John_Doe", "Name with underscore"), 
-        ("龍", "Chinese character"),
+        ("Nico"),
+        ("Leonhard_Euler"), 
+        ("織田 信長", "Oda Nobunaga"),
         ("User123", "Username with numbers"),
-        ("Hello_World", "Programming classic"),
-        ("🚀🌟", "Emojis work too!")
+        ("⛰️😸☕", "Emojis work too!")
     ]
     
     cols = st.columns(3)
