@@ -643,8 +643,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.markdown('Flag Customization')
-st.markdown('<h4 style="font-style: italic; margin-top: 0;">More flag designs coming soon!</h4>')
+st.markdown('<h3 style="margin-bottom: 0.5rem;">Flag Customisation</h3>', unsafe_allow_html=True)
+st.markdown('<h4 style="font-style: italic; margin-top: 0;">More flag designs coming soon!</h4>', unsafe_allow_html=True)
 # First row of options
 col3, col4, col5 = st.columns(3)
 
