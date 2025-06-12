@@ -300,7 +300,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
     plt.ioff()
     
     fig, ax = plt.subplots(figsize=(10, 6.67))
-    fig.patch.set_facecolor('white')  # Changed from black to white
+    fig.patch.set_facecolor('black')  
     
     flag = np.zeros((height, width, 3))
     colors_count = len(flattened_hexstring)
@@ -392,7 +392,7 @@ with st.expander("How it works & Tips"):
     
     **Pro Tips:**
     - **Case-sensitive**: "Merlin" ≠ "merlin" (different flags!)
-    - **Join words**: Use underscores (Eugene_Wigner vs Eugene Wigner)
+    - **Join words**: Use underscores to preserve uniqueness (Eugene_Wigner vs Eugene Wigner)
     - **Non-english script**: Different writing systems will likely create more colors
     - **Try**: usernames, phrases, dates, or any text
     - **Reproducible**: Same input always creates the same flag
@@ -411,7 +411,7 @@ with col1:
     )
 
 with col2:
-    tooltip_html = create_tooltip("Unicode: Uses character code points. UTF-8: Uses byte encoding.")
+    tooltip_html = create_tooltip("Unicode: Uses character code points. UTF-8: Uses byte encoding. UTF-8 will typically produce more and more similar colours for non-english scripts.")
     st.markdown(f'<div style="margin-top: 0rem"><strong>Encoding standard</strong> {tooltip_html}</div>', unsafe_allow_html=True)
     encoding_mode = st.selectbox("", ["Unicode", "UTF-8"], label_visibility="collapsed")
     
