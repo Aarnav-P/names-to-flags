@@ -790,8 +790,7 @@ with st.expander("How it works & Tips"):
 
 # Input section with better layout
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.subheader('<h3 class="panda-subtitle">"Enter your name"</h3>')
-
+st.markdown('<h3 class="panda-subtitle">Enter your name</h3>', unsafe_allow_html=True)
 col1, col2 = st.columns([3, 1])
 
 with col1:
@@ -808,8 +807,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Enhanced options section
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.subheader("Flag Customization")
-st.markdown("__More flag designs coming soon!__")
+st.markdown('<h3 class="panda-subtitle">"Flag Customization"</h3>')
+st.markdown('<h4 class="panda-italic">"More flag designs coming soon!"</h4>')
 # First row of options
 col3, col4, col5 = st.columns(3)
 
