@@ -824,9 +824,9 @@ if not name_input:
     st.markdown("Click any example to see how different inputs create unique flags:")
     
     examples = [
-        ("Nico"),
-        ("Leonhard_Euler"), 
-        ("織田 信長", "Oda Nobunaga"),
+        ("Nico", "Unite all Nico's under a flag!"),
+        ("Leonhard_Euler", "Full name"), 
+        ("織田 信長", "Non-English scripts"),
         ("User123", "Username with numbers"),
         ("⛰️😸☕", "Emojis work too!")
     ]
