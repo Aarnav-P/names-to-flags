@@ -13,18 +13,38 @@ st.set_page_config(
     layout="centered"
 )
 
-# test change
-
 # Custom CSS for better styling and tooltips
+
 st.markdown("""
 <style>
+    /* Import Google Fonts for better typography options */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap');
+    
+    /* Global theme - Panda colors */
+    :root {
+        --panda-black: #2d2d2d;
+        --panda-white: #f8f8f8;
+        --panda-light-gray: #e8e8e8;
+        --panda-dark-gray: #4a4a4a;
+        --panda-accent: #1a1a1a;
+    }
+    
+    
+    /* Main app background */
+    .main .block-container {
+        background: linear-gradient(135deg, var(--panda-white) 0%, var(--panda-light-gray) 100%);
+        padding-top: 2rem;
+    }
+    
     .main-header {
         text-align: center;
-        padding: 2rem 0;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
+        padding: 2.5rem 1rem;
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
+        border-radius: 20px;
         margin-bottom: 2rem;
-        color: white;
+        color: var(--panda-white);
+        box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
+        border: 2px solid var(--panda-accent);
     }
     
     .info-tooltip {
