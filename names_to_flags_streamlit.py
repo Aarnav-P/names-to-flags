@@ -13,7 +13,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Custom CSS for better styling and tooltips
+# %% Custom CSS for better styling and tooltips
 
 st.markdown("""
 <style>
@@ -46,31 +46,62 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
         border: 2px solid var(--panda-accent);
     }
+  .main-header h1 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .main-header p {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-style: italic;
+    }
     
     .info-tooltip {
         position: relative;
         display: inline-block;
         cursor: help;
-        color: #1f77b4;
-        margin-left: 5px;
+        color: var(--panda-accent);
+        margin-left: 8px;
+        font-size: 1rem;
     }
     
     .info-tooltip .tooltiptext {
         visibility: hidden;
-        width: 200px;
-        background-color: #333;
-        color: #fff;
+        width: 250px;
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
+        color: var(--panda-white);
         text-align: center;
-        border-radius: 6px;
-        padding: 8px;
+        border-radius: 8px;
+        padding: 12px;
         position: absolute;
-        z-index: 1;
+        z-index: 1000;
         bottom: 125%;
         left: 50%;
-        margin-left: -100px;
-        font-size: 12px;
+        margin-left: -125px;
+        font-size: 13px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
         opacity: 0;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border: 1px solid var(--panda-accent);
+    }
+    
+    .info-tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--panda-black) transparent transparent transparent;
     }
     
     .info-tooltip:hover .tooltiptext {
@@ -79,38 +110,183 @@ st.markdown("""
     }
     
     .option-container {
-        background-color: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-        border-left: 4px solid #1f77b4;
+        background: linear-gradient(135deg, var(--panda-white) 0%, var(--panda-light-gray) 50%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 1.5rem 0;
+        border-left: 5px solid var(--panda-black);
+        box-shadow: 0 4px 15px rgba(45, 45, 45, 0.1);
+        border: 1px solid var(--panda-light-gray);
     }
     
     .color-preview {
-        border: 2px solid #ddd;
-        border-radius: 5px;
-        margin: 2px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border: 2px solid var(--panda-dark-gray);
+        border-radius: 8px;
+        margin: 3px;
+        box-shadow: 0 3px 8px rgba(45, 45, 45, 0.2);
+        transition: transform 0.2s ease;
+    }
+    
+    .color-preview:hover {
+        transform: scale(1.05);
     }
     
     .stats-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        color: var(--panda-white);
         text-align: center;
         margin: 0.5rem;
+        box-shadow: 0 6px 20px rgba(45, 45, 45, 0.3);
+        border: 2px solid var(--panda-accent);
+        transition: transform 0.2s ease;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .stats-card h3 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: var(--panda-white);
+    }
+    
+    .stats-card p {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+        font-style: italic;
     }
     
     .footer-style {
         text-align: center;
-        padding: 2rem;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        margin-top: 2rem;
+        padding: 2.5rem;
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%);
+        border-radius: 20px;
+        margin-top: 3rem;
+        color: var(--panda-white);
+        box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
+        border: 2px solid var(--panda-accent);
+    }
+    
+    .footer-style h4 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        color: var(--panda-white);
+    }
+    
+    .footer-style p {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+    }
+    
+    .footer-style a {
+        color: var(--panda-light-gray);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+    
+    .footer-style a:hover {
+        color: var(--panda-white);
+        text-decoration: underline;
+    }
+    
+    .footer-style small {
+        font-style: italic;
+        opacity: 0.8;
+    }
+    
+    /* Streamlit component styling */
+    .stSelectbox label, .stTextInput label, .stSlider label {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        color: var(--panda-accent) !important;
+    }
+    
+    .stButton > button {
+        background: linear-gradient(135deg, var(--panda-black) 0%, var(--panda-dark-gray) 100%) !important;
+        color: var(--panda-white) !important;
+        border: 2px solid var(--panda-accent) !important;
+        border-radius: 10px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 15px rgba(45, 45, 45, 0.3) !important;
+    }
+    
+    /* Fix for stats container centering */
+    .stats-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+    
+    /* Remove weird spacing */
+    .element-container {
+        margin-bottom: 0 !important;
+    }
+    
+    /* Typography classes for easy customization */
+    .panda-title {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--panda-black);
+    }
+    
+    .panda-subtitle {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: var(--panda-dark-gray);
+    }
+    
+    .panda-body {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--panda-accent);
+        line-height: 1.6;
+    }
+    
+    .panda-code {
+        font-family: 'Fira Code', monospace;
+        font-weight: 400;
+        background: var(--panda-light-gray);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        border: 1px solid var(--panda-dark-gray);
+    }
+    
+    .panda-italic {
+        font-style: italic;
+    }
+    
+    .panda-bold {
+        font-weight: 700;
     }
 </style>
 """, unsafe_allow_html=True)
+
+# %% Functions
 
 def create_tooltip(text):
     """Create a tooltip icon with hover text"""
@@ -349,7 +525,245 @@ def get_color_stats(flattened_hexstring):
         "brightness_category": "Dark" if avg_brightness < 85 else "Medium" if avg_brightness < 170 else "Bright"
     }
 
-# Main App
+def create_tooltip(text):
+    """Create a tooltip icon with hover text"""
+    return f"""
+    <span class="info-tooltip">ℹ️
+        <span class="tooltiptext">{text}</span>
+    </span>
+    """
+
+def brighten(finished_hexstring, amount):
+    """Brighten the colors by adding to RGB values"""
+    brightened = []
+    for word in finished_hexstring:
+        brightened_word = []
+        for colour_block in word:
+            rgb_vals = [colour_block[2*i:2*i+2] for i in range(3)]
+            empty_string = []
+            for colour in rgb_vals:
+                colour_val = int(colour, 16)
+                colour_val += amount
+                colour_val = min(255, colour_val)
+                colour_hex = hex(colour_val)[2:].zfill(2)
+                empty_string.append(colour_hex)
+            brightened_colour = ''.join(empty_string)
+            brightened_word.append(brightened_colour)
+        brightened.append(brightened_word)
+    return brightened
+
+def darken(finished_hexstring, amount):
+    """Darken the colors by subtracting from RGB values"""
+    darkened = []
+    for word in finished_hexstring:
+        darkened_word = []
+        for colour_block in word:
+            rgb_vals = [colour_block[2*i:2*i+2] for i in range(3)]
+            empty_string = []
+            for colour in rgb_vals:
+                colour_val = int(colour, 16)
+                colour_val -= amount
+                colour_val = max(0, colour_val)
+                colour_hex = hex(colour_val)[2:].zfill(2)
+                empty_string.append(colour_hex)
+            darkened_colour = ''.join(empty_string)
+            darkened_word.append(darkened_colour)
+        darkened.append(darkened_word)
+    return darkened
+
+def adjust_saturation(finished_hexstring, factor):
+    """Adjust color saturation"""
+    adjusted = []
+    for word in finished_hexstring:
+        adjusted_word = []
+        for colour_block in word:
+            rgb_vals = [int(colour_block[2*i:2*i+2], 16) for i in range(3)]
+            # Convert to HSV for saturation adjustment
+            r, g, b = [x/255.0 for x in rgb_vals]
+            max_val = max(r, g, b)
+            min_val = min(r, g, b)
+            diff = max_val - min_val
+            
+            if diff == 0:
+                adjusted_word.append(colour_block)
+                continue
+                
+            # Adjust saturation
+            if max_val != 0:
+                saturation = diff / max_val
+                saturation = min(1.0, saturation * factor)
+                
+                # Convert back to RGB
+                if saturation == 0:
+                    r = g = b = max_val
+                else:
+                    delta = max_val * saturation
+                    min_val = max_val - delta
+                    
+                    if r == max_val:
+                        r = max_val
+                        if g == max(rgb_vals[1]/255.0, rgb_vals[2]/255.0):
+                            g = min_val + (g - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
+                            b = min_val
+                        else:
+                            b = min_val + (b - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
+                            g = min_val
+            
+            # Convert back to hex
+            rgb_vals = [int(x * 255) for x in [r, g, b]]
+            hex_vals = [hex(max(0, min(255, val)))[2:].zfill(2) for val in rgb_vals]
+            adjusted_word.append(''.join(hex_vals))
+        adjusted.append(adjusted_word)
+    return adjusted
+
+def chunking(string, length):
+    """Split string into chunks of specified length"""
+    return [string[i:length+i] for i in range(0, len(string), length)]
+
+def fill_colour_blocks(split_string, filler_string):
+    """Fill incomplete color blocks with filler string"""
+    finished_hexstring = []
+    for name in split_string:
+        finished_name = name.copy()
+        if len(finished_name[-1]) < 6:
+            joined = finished_name[-1] + filler_string
+            finished_name[-1] = joined[:6]
+        finished_hexstring.append(finished_name)
+    return finished_hexstring
+
+def flatten(xss):
+    """Flatten nested list"""
+    return [x for xs in xss for x in xs]
+
+def generate_random_output(seed_string, length):
+    """Generate deterministic random string from seed"""
+    seed = int(hashlib.sha256(seed_string.encode('utf-8')).hexdigest(), 16)
+    random.seed(seed)
+    random_output = ''.join(random.choices('abcdef0123456789', k=length))
+    return random_output
+
+def split_into_chunks(string_list, length):
+    """Split each string in list into chunks"""
+    total_list = []
+    for word in string_list:
+        split_word = chunking(word, length)
+        total_list.append(split_word)
+    return total_list
+
+def unicode_to_hex(input_string):
+    """Convert string to hex using Unicode code points"""
+    names = input_string.split()
+    hex_representation = []
+    
+    for name in names:
+        concatenated_name = name.replace('_', '')
+        unicode_code_points = [ord(char) for char in concatenated_name]
+        hex_name = [hex(code_point)[2:] for code_point in unicode_code_points]
+        hex_name_joined = ''.join(hex_name)
+        hex_representation.append(hex_name_joined)
+    
+    return hex_representation
+
+def utf8_to_hex(input_string):
+    """Convert string to hex using UTF-8 encoding"""
+    names = input_string.split(" ")
+    hex_representation = []
+    
+    for name in names:
+        concatenated_name = name.replace('_', '')
+        utf8_bytes = concatenated_name.encode('utf-8')
+        hex_representation.append(utf8_bytes.hex())
+    
+    return hex_representation
+
+def string_to_hex(input_string, mode):
+    """Convert text to hexcode"""
+    if mode == "UTF-8": 
+        hexstring = utf8_to_hex(input_string)
+    elif mode == "Unicode":
+        hexstring = unicode_to_hex(input_string)
+    
+    seed_string = ''.join(hexstring)
+    return hexstring, seed_string
+
+def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400):
+    """Create flag image using matplotlib with different patterns"""
+    fig, ax = plt.subplots(figsize=(10, 6.67), facecolor='black')
+    
+    flag = np.zeros((height, width, 3))
+    colors_count = len(flattened_hexstring)
+    
+    colour_array = np.empty((colors_count, 3))
+    
+    # Convert hex to RGB
+    for i in range(colors_count):
+        hex_vals = flattened_hexstring[i]
+        R_val = int(hex_vals[:2], 16)
+        G_val = int(hex_vals[2:4], 16)
+        B_val = int(hex_vals[4:6], 16)
+        colour_array[i] = np.array([R_val, G_val, B_val]) / 255
+    
+    if pattern == "stripes":
+        stripe_height = height // colors_count
+        stripe_width = width // colors_count
+        
+        for i in range(colors_count):
+            if mode == "horizontal":
+                flag[i*stripe_height:(i+1)*stripe_height, :] = colour_array[i]
+            elif mode == "vertical":
+                flag[:, i*stripe_width:(i+1)*stripe_width, :] = colour_array[i]
+    
+    elif pattern == "checkerboard":
+        # Create checkerboard pattern
+        block_size = min(width // 8, height // 8)
+        for y in range(0, height, block_size):
+            for x in range(0, width, block_size):
+                color_idx = ((x // block_size) + (y // block_size)) % colors_count
+                flag[y:min(y+block_size, height), x:min(x+block_size, width)] = colour_array[color_idx]
+    
+    elif pattern == "diagonal":
+        # Create diagonal stripes
+        for y in range(height):
+            for x in range(width):
+                stripe_idx = int((x + y) / (width + height) * colors_count) % colors_count
+                flag[y, x] = colour_array[stripe_idx]
+    
+    ax.axis('off')
+    ax.imshow(flag)
+    ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)
+    
+    plt.tight_layout()
+    return fig
+
+def fig_to_bytes(fig):
+    """Convert matplotlib figure to bytes for download"""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=300, bbox_inches='tight', 
+                facecolor='black', edgecolor='black')
+    buf.seek(0)
+    return buf.getvalue()
+
+def get_color_stats(flattened_hexstring):
+    """Get statistics about the colors"""
+    colors_count = len(flattened_hexstring)
+    
+    # Calculate average brightness
+    total_brightness = 0
+    for color in flattened_hexstring:
+        r, g, b = int(color[:2], 16), int(color[2:4], 16), int(color[4:6], 16)
+        brightness = (r + g + b) / 3
+        total_brightness += brightness
+    
+    avg_brightness = total_brightness / colors_count if colors_count > 0 else 0
+    
+    return {
+        "count": colors_count,
+        "avg_brightness": avg_brightness,
+        "brightness_category": "Dark" if avg_brightness < 85 else "Medium" if avg_brightness < 170 else "Bright"
+    }
+
+# %% MAIN APP
+
 st.markdown("""
 <div class="main-header">
     <h1>Name to Flag Converter</h1>
@@ -376,7 +790,7 @@ with st.expander("How it works & Tips"):
 
 # Input section with better layout
 st.markdown('<div class="option-container">', unsafe_allow_html=True)
-st.subheader("Enter your name")
+st.subheader('<h3 class="panda-subtitle">"Enter your name"</h3>')
 
 col1, col2 = st.columns([3, 1])
 
