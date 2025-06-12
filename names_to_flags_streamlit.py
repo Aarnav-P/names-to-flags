@@ -83,12 +83,15 @@ st.markdown("""
     }
     
     .footer-style {
-        text-align: center;
-        padding: 2rem;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        margin-top: 2rem;
-    }
+    text-align: center;
+    padding: 2.5rem;
+    background: linear-gradient(90deg, var(#2d2d2d) 0%, var(#4a4a4a) 100%);
+    border-radius: 20px;
+    margin-top: 3rem;
+    color: var(#f8f8f8);
+    box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
+    border: 2px solid var(#1a1a1a);
+}
 </style>
 """, unsafe_allow_html=True)
 
