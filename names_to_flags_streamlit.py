@@ -200,47 +200,27 @@ def darken(finished_hexstring, amount):
     return darkened
 
 def adjust_saturation(finished_hexstring, factor):
-    """Adjust color saturation"""
+    """Adjust color saturation - simplified version"""
     adjusted = []
     for word in finished_hexstring:
         adjusted_word = []
         for colour_block in word:
-            rgb_vals = [int(colour_block[2*i:2*i+2], 16) for i in range(3)]
-            # Convert to HSV for saturation adjustment
-            r, g, b = [x/255.0 for x in rgb_vals]
-            max_val = max(r, g, b)
-            min_val = min(r, g, b)
-            diff = max_val - min_val
+            # Simple saturation adjustment by interpolating with grayscale
+            r = int(colour_block[:2], 16)
+            g = int(colour_block[2:4], 16)
+            b = int(colour_block[4:6], 16)
             
-            if diff == 0:
-                adjusted_word.append(colour_block)
-                continue
-                
-            # Adjust saturation
-            if max_val != 0:
-                saturation = diff / max_val
-                saturation = min(1.0, saturation * factor)
-                
-                # Convert back to RGB
-                if saturation == 0:
-                    r = g = b = max_val
-                else:
-                    delta = max_val * saturation
-                    min_val = max_val - delta
-                    
-                    if r == max_val:
-                        r = max_val
-                        if g == max(rgb_vals[1]/255.0, rgb_vals[2]/255.0):
-                            g = min_val + (g - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
-                            b = min_val
-                        else:
-                            b = min_val + (b - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
-                            g = min_val
+            # Calculate grayscale value
+            gray = int(0.299 * r + 0.587 * g + 0.114 * b)
+            
+            # Interpolate between original and grayscale
+            r = max(0, min(255, int(gray + factor * (r - gray))))
+            g = max(0, min(255, int(gray + factor * (g - gray))))
+            b = max(0, min(255, int(gray + factor * (b - gray))))
             
             # Convert back to hex
-            rgb_vals = [int(x * 255) for x in [r, g, b]]
-            hex_vals = [hex(max(0, min(255, val)))[2:].zfill(2) for val in rgb_vals]
-            adjusted_word.append(''.join(hex_vals))
+            hex_color = f"{r:02x}{g:02x}{b:02x}"
+            adjusted_word.append(hex_color)
         adjusted.append(adjusted_word)
     return adjusted
 
@@ -316,7 +296,11 @@ def string_to_hex(input_string, mode):
 
 def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400):
     """Create flag image using matplotlib with different patterns"""
-    fig, ax = plt.subplots(figsize=(10, 6.67), facecolor='black')
+    # Set matplotlib to use a non-interactive backend
+    plt.ioff()
+    
+    fig, ax = plt.subplots(figsize=(10, 6.67))
+    fig.patch.set_facecolor('white')  # Changed from black to white
     
     flag = np.zeros((height, width, 3))
     colors_count = len(flattened_hexstring)
@@ -336,13 +320,12 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
         stripe_width = width // colors_count
         
         for i in range(colors_count):
-            if mode == "horizontal":
+            if mode == "Horizontal":
                 flag[i*stripe_height:(i+1)*stripe_height, :] = colour_array[i]
-            elif mode == "vertical":
+            elif mode == "Vertical":
                 flag[:, i*stripe_width:(i+1)*stripe_width, :] = colour_array[i]
     
     elif pattern == "checkerboard":
-        # Create checkerboard pattern
         block_size = min(width // 8, height // 8)
         for y in range(0, height, block_size):
             for x in range(0, width, block_size):
@@ -350,7 +333,6 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
                 flag[y:min(y+block_size, height), x:min(x+block_size, width)] = colour_array[color_idx]
     
     elif pattern == "diagonal":
-        # Create diagonal stripes
         for y in range(height):
             for x in range(width):
                 stripe_idx = int((x + y) / (width + height) * colors_count) % colors_count
@@ -358,7 +340,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
     
     ax.axis('off')
     ax.imshow(flag)
-    ax.set_title(f'Flag of {name}', color='white', fontsize=16, pad=20)
+    ax.set_title(f'Flag for: {name}', color='black', fontsize=16, pad=20)  # Changed to black
     
     plt.tight_layout()
     return fig
@@ -367,244 +349,7 @@ def fig_to_bytes(fig):
     """Convert matplotlib figure to bytes for download"""
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=300, bbox_inches='tight', 
-                facecolor='black', edgecolor='black')
-    buf.seek(0)
-    return buf.getvalue()
-
-def get_color_stats(flattened_hexstring):
-    """Get statistics about the colors"""
-    colors_count = len(flattened_hexstring)
-    
-    # Calculate average brightness
-    total_brightness = 0
-    for color in flattened_hexstring:
-        r, g, b = int(color[:2], 16), int(color[2:4], 16), int(color[4:6], 16)
-        brightness = (r + g + b) / 3
-        total_brightness += brightness
-    
-    avg_brightness = total_brightness / colors_count if colors_count > 0 else 0
-    
-    return {
-        "count": colors_count,
-        "avg_brightness": avg_brightness,
-        "brightness_category": "Dark" if avg_brightness < 85 else "Medium" if avg_brightness < 170 else "Bright"
-    }
-
-def create_tooltip(text):
-    """Create a tooltip icon with hover text"""
-    return f"""
-    <span class="info-tooltip">ℹ️
-        <span class="tooltiptext">{text}</span>
-    </span>
-    """
-
-def brighten(finished_hexstring, amount):
-    """Brighten the colors by adding to RGB values"""
-    brightened = []
-    for word in finished_hexstring:
-        brightened_word = []
-        for colour_block in word:
-            rgb_vals = [colour_block[2*i:2*i+2] for i in range(3)]
-            empty_string = []
-            for colour in rgb_vals:
-                colour_val = int(colour, 16)
-                colour_val += amount
-                colour_val = min(255, colour_val)
-                colour_hex = hex(colour_val)[2:].zfill(2)
-                empty_string.append(colour_hex)
-            brightened_colour = ''.join(empty_string)
-            brightened_word.append(brightened_colour)
-        brightened.append(brightened_word)
-    return brightened
-
-def darken(finished_hexstring, amount):
-    """Darken the colors by subtracting from RGB values"""
-    darkened = []
-    for word in finished_hexstring:
-        darkened_word = []
-        for colour_block in word:
-            rgb_vals = [colour_block[2*i:2*i+2] for i in range(3)]
-            empty_string = []
-            for colour in rgb_vals:
-                colour_val = int(colour, 16)
-                colour_val -= amount
-                colour_val = max(0, colour_val)
-                colour_hex = hex(colour_val)[2:].zfill(2)
-                empty_string.append(colour_hex)
-            darkened_colour = ''.join(empty_string)
-            darkened_word.append(darkened_colour)
-        darkened.append(darkened_word)
-    return darkened
-
-def adjust_saturation(finished_hexstring, factor):
-    """Adjust color saturation"""
-    adjusted = []
-    for word in finished_hexstring:
-        adjusted_word = []
-        for colour_block in word:
-            rgb_vals = [int(colour_block[2*i:2*i+2], 16) for i in range(3)]
-            # Convert to HSV for saturation adjustment
-            r, g, b = [x/255.0 for x in rgb_vals]
-            max_val = max(r, g, b)
-            min_val = min(r, g, b)
-            diff = max_val - min_val
-            
-            if diff == 0:
-                adjusted_word.append(colour_block)
-                continue
-                
-            # Adjust saturation
-            if max_val != 0:
-                saturation = diff / max_val
-                saturation = min(1.0, saturation * factor)
-                
-                # Convert back to RGB
-                if saturation == 0:
-                    r = g = b = max_val
-                else:
-                    delta = max_val * saturation
-                    min_val = max_val - delta
-                    
-                    if r == max_val:
-                        r = max_val
-                        if g == max(rgb_vals[1]/255.0, rgb_vals[2]/255.0):
-                            g = min_val + (g - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
-                            b = min_val
-                        else:
-                            b = min_val + (b - min_val) * saturation / (diff / max_val) if diff > 0 else min_val
-                            g = min_val
-            
-            # Convert back to hex
-            rgb_vals = [int(x * 255) for x in [r, g, b]]
-            hex_vals = [hex(max(0, min(255, val)))[2:].zfill(2) for val in rgb_vals]
-            adjusted_word.append(''.join(hex_vals))
-        adjusted.append(adjusted_word)
-    return adjusted
-
-def chunking(string, length):
-    """Split string into chunks of specified length"""
-    return [string[i:length+i] for i in range(0, len(string), length)]
-
-def fill_colour_blocks(split_string, filler_string):
-    """Fill incomplete color blocks with filler string"""
-    finished_hexstring = []
-    for name in split_string:
-        finished_name = name.copy()
-        if len(finished_name[-1]) < 6:
-            joined = finished_name[-1] + filler_string
-            finished_name[-1] = joined[:6]
-        finished_hexstring.append(finished_name)
-    return finished_hexstring
-
-def flatten(xss):
-    """Flatten nested list"""
-    return [x for xs in xss for x in xs]
-
-def generate_random_output(seed_string, length):
-    """Generate deterministic random string from seed"""
-    seed = int(hashlib.sha256(seed_string.encode('utf-8')).hexdigest(), 16)
-    random.seed(seed)
-    random_output = ''.join(random.choices('abcdef0123456789', k=length))
-    return random_output
-
-def split_into_chunks(string_list, length):
-    """Split each string in list into chunks"""
-    total_list = []
-    for word in string_list:
-        split_word = chunking(word, length)
-        total_list.append(split_word)
-    return total_list
-
-def unicode_to_hex(input_string):
-    """Convert string to hex using Unicode code points"""
-    names = input_string.split()
-    hex_representation = []
-    
-    for name in names:
-        concatenated_name = name.replace('_', '')
-        unicode_code_points = [ord(char) for char in concatenated_name]
-        hex_name = [hex(code_point)[2:] for code_point in unicode_code_points]
-        hex_name_joined = ''.join(hex_name)
-        hex_representation.append(hex_name_joined)
-    
-    return hex_representation
-
-def utf8_to_hex(input_string):
-    """Convert string to hex using UTF-8 encoding"""
-    names = input_string.split(" ")
-    hex_representation = []
-    
-    for name in names:
-        concatenated_name = name.replace('_', '')
-        utf8_bytes = concatenated_name.encode('utf-8')
-        hex_representation.append(utf8_bytes.hex())
-    
-    return hex_representation
-
-def string_to_hex(input_string, mode):
-    """Convert text to hexcode"""
-    if mode == "UTF-8": 
-        hexstring = utf8_to_hex(input_string)
-    elif mode == "Unicode":
-        hexstring = unicode_to_hex(input_string)
-    
-    seed_string = ''.join(hexstring)
-    return hexstring, seed_string
-
-def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400):
-    """Create flag image using matplotlib with different patterns"""
-    fig, ax = plt.subplots(figsize=(10, 6.67), facecolor='black')
-    
-    flag = np.zeros((height, width, 3))
-    colors_count = len(flattened_hexstring)
-    
-    colour_array = np.empty((colors_count, 3))
-    
-    # Convert hex to RGB
-    for i in range(colors_count):
-        hex_vals = flattened_hexstring[i]
-        R_val = int(hex_vals[:2], 16)
-        G_val = int(hex_vals[2:4], 16)
-        B_val = int(hex_vals[4:6], 16)
-        colour_array[i] = np.array([R_val, G_val, B_val]) / 255
-    
-    if pattern == "stripes":
-        stripe_height = height // colors_count
-        stripe_width = width // colors_count
-        
-        for i in range(colors_count):
-            if mode == "horizontal":
-                flag[i*stripe_height:(i+1)*stripe_height, :] = colour_array[i]
-            elif mode == "vertical":
-                flag[:, i*stripe_width:(i+1)*stripe_width, :] = colour_array[i]
-    
-    elif pattern == "checkerboard":
-        # Create checkerboard pattern
-        block_size = min(width // 8, height // 8)
-        for y in range(0, height, block_size):
-            for x in range(0, width, block_size):
-                color_idx = ((x // block_size) + (y // block_size)) % colors_count
-                flag[y:min(y+block_size, height), x:min(x+block_size, width)] = colour_array[color_idx]
-    
-    elif pattern == "diagonal":
-        # Create diagonal stripes
-        for y in range(height):
-            for x in range(width):
-                stripe_idx = int((x + y) / (width + height) * colors_count) % colors_count
-                flag[y, x] = colour_array[stripe_idx]
-    
-    ax.axis('off')
-    ax.imshow(flag)
-    ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)
-    
-    plt.tight_layout()
-    return fig
-
-def fig_to_bytes(fig):
-    """Convert matplotlib figure to bytes for download"""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=300, bbox_inches='tight', 
-                facecolor='black', edgecolor='black')
+                facecolor='white', edgecolor='white')  # Changed to white
     buf.seek(0)
     return buf.getvalue()
 
@@ -666,9 +411,9 @@ with col1:
     )
 
 with col2:
-    st.markdown('<div style="margin-top: 1.8rem">', unsafe_allow_html=True)
+    tooltip_html = create_tooltip("Unicode: Uses character code points. UTF-8: Uses byte encoding.")
+    st.markdown(f'<div style="margin-top: 1.8rem"><strong>Encoding standard</strong> {tooltip_html}</div>', unsafe_allow_html=True)
     encoding_mode = st.selectbox("", ["Unicode", "UTF-8"], label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
     
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -747,7 +492,7 @@ if generate_button:
                 color_stats = get_color_stats(flattened_hexstring)
                 
                 # Create the flag
-                fig = create_flag_image(flattened_hexstring, name_input, stripe_direction, flag_pattern)
+                fig = create_flag_image(flattened_hexstring, name_input, stripe_direction, flag_pattern.lower())
                 
                 # Display the flag
                 st.pyplot(fig)
@@ -765,7 +510,7 @@ if generate_button:
                     )
                 
                 # Stats cards
-                st.subheader("Flag Statistics")
+                st.subheader("📊 Flag Statistics")
                 stat_col1, stat_col2, stat_col3 = st.columns(3)
                 
                 with stat_col1:
@@ -793,7 +538,7 @@ if generate_button:
                     """, unsafe_allow_html=True)
                 
                 # Enhanced color information
-                with st.expander("Flag Analysis"):
+                with st.expander("🔍 Flag Analysis"):
                     st.write(f"**Generated from:** {len(hexstring)} word(s)")
                     st.write(f"**Total colors:** {len(flattened_hexstring)} stripes")
                     st.write(f"**Average brightness:** {color_stats['avg_brightness']:.1f}/255")
