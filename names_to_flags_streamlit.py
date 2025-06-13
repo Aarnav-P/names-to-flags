@@ -337,7 +337,7 @@ def string_to_hex(input_string, mode):
 def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400):
     """Create flag image using matplotlib with different patterns"""
     # Set matplotlib to use a non-interactive backend
-    plt.ioff()
+    #plt.ioff()
     
     fig, ax = plt.subplots(figsize=(10, 6.67))
     fig.patch.set_facecolor('black')  
@@ -379,9 +379,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
                 flag[y, x] = colour_array[stripe_idx]
     
     ax.axis('off')
-    ax.imshow(flag)
-    ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)  
-    
+    ax.imshow(flag)  
     plt.tight_layout()
     return fig
 
@@ -558,7 +556,7 @@ if generate_button:
                 with stat_col1:
                     st.markdown(f"""
                     <div class="stats-card">
-                        <div style="font-size: 2.5rem; font-weight: bold; color: #d4d4d4; text-align: center; margin-bottom: 0.5rem;">{color_stats['count']}</div>
+                        <div style="font-size: 2.5rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.5rem;">{color_stats['count']}</div>
                         <div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); text-align: center;">Color Stripes</div>
                     </div>
                     """, unsafe_allow_html=True)
