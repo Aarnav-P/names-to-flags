@@ -643,7 +643,7 @@ st.markdown("""
 <div class="footer-style">
     <h4>🎨 About This Tool</h4>
     <p>Every name is unique. This website converts your lexical fingerprint into a flag to show off.</p>
-    <p>Made using <a href='https://streamlit.io/' Streamlit> </a> • Your flag is 100% free :) </p>
+    <p>Made using <a href='https://streamlit.io/'>Streamlit</a> • Your flag is 100% free :) </p>
     <p>Designed and created by Aarnav Panda, please send feedback and ideas to aarnavpanda11@gmail.com</p>
     <p><small>Tip: Bookmark this URL to quickly generate a flag for any situation!</small></p>
 </div>
