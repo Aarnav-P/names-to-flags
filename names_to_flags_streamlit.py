@@ -553,33 +553,31 @@ if generate_button:
                 
                 # Stats cards
                 st.subheader("📊 Flag Statistics")
-                stats_container = st.container()
-                with stats_container:
-                    stat_col1, stat_col2, stat_col3 = st.columns(3, gap="medium")
+                stat_col1, stat_col2, stat_col3 = st.columns(3, gap="medium")
                     
-                    with stat_col1:
-                        st.markdown(f"""
-                        <div class="stats-card">
-                            <h3>{color_stats['count']}</h3>
-                            <p>Color Stripes</p>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    
-                    with stat_col2:
-                        st.markdown(f"""
-                        <div class="stats-card">
-                            <h3>{color_stats['brightness_category']}</h3>
-                            <p>Overall Tone</p>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    
-                    with stat_col3:
-                        st.markdown(f"""
-                        <div class="stats-card">
-                            <h3>{encoding_mode}</h3>
-                            <p>Encoding Used</p>
-                        </div>
-                        """, unsafe_allow_html=True)
+                with stat_col1:
+                    st.markdown(f"""
+                    <div class="stats-card">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.5rem;">{color_stats['count']}</div>
+                        <div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); text-align: center;">Color Stripes</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with stat_col2:
+                    st.markdown(f"""
+                    <div class="stats-card">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.5rem;">{color_stats['brightness_category']}</div>
+                        <div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); text-align: center;">Overall Tone</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with stat_col3:
+                    st.markdown(f"""
+                    <div class="stats-card">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.5rem;">{encoding_mode}</div>
+                        <div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); text-align: center;">Encoding Used</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 # Enhanced color information
                 with st.expander("🔍 Flag Analysis"):
