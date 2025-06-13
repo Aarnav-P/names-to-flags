@@ -74,12 +74,52 @@ st.markdown("""
     }
     
     .stats-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem 1rem;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    margin: 0.5rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    }
+    
+    .stats-card h3 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0 0 0.5rem 0;
         color: white;
-        text-align: center;
-        margin: 0.5rem;
+        line-height: 1;
+    }
+    
+    .stats-card p {
+        font-size: 1rem;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+    
+    /* Ensure consistent column spacing */
+    .stats-container {
+        display: flex;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .stats-container > div {
+        flex: 1;
+    }
+    
+    /* Override Streamlit's default column styles for stats */
+    div[data-testid="column"] .stats-card {
+        margin-left: 0;
+        margin-right: 0;
     }
     
     /* Make input fields dark themed */
@@ -434,7 +474,7 @@ with col4:
     flag_pattern = st.selectbox("", ["Stripes", "Checkerboard", "Diagonal"], label_visibility="collapsed")
 
 with col5:
-    st.markdown("**Colou0r adjustments:**" + create_tooltip("Choose how to modify the generated colors for better visibility."), unsafe_allow_html=True)
+    st.markdown("**Colour adjustments:**" + create_tooltip("Choose how to modify the generated colors for better visibility."), unsafe_allow_html=True)
     color_adjustment = st.selectbox("", ["None", "Brighten", "Darken", "Boost Saturation"], label_visibility="collapsed")
 
 # Second row for adjustment amount
@@ -460,7 +500,7 @@ col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
 with col_btn2:
     generate_button = st.button("🎨 Generate Your Unique Flag", type="primary", use_container_width=True)
 with st.container():
-    st.markdown('<p style="margin-bottom: 0.5rem; color: white;">Disclaimer: Your flag will be uniquely (but might not be conventionally) beautiful! Use "Colour Adjustments"" to make tweaks (though you will lose the uniqueness).</p>', unsafe_allow_html=True)
+    st.markdown('<p style="font-style: italic; margin-bottom: 0.5rem; color: white;"><small>Disclaimer: Your flag will be uniquely (but might not be conventionally) beautiful! Use "Colour Adjustments"" to make tweaks (though you will lose the uniqueness).</small></p>', unsafe_allow_html=True)
     
 # Generate flag
 if generate_button:
@@ -513,39 +553,33 @@ if generate_button:
                 
                 # Stats cards
                 st.subheader("📊 Flag Statistics")
-                stat_col1, stat_col2, stat_col3 = st.columns(3)
-                
-                with stat_col1:
-                    st.metric(
-                        label="Color Stripes",
-                        value=color_stats['count'],
-                        help="Number of color bands in your flag")
-
-# =============================================================================
-#                 with stat_col1:
-#                     st.markdown(f"""
-#                     <div class="stats-card">
-#                         <h3>{color_stats['count']}</h3>
-#                         <p>Color Stripes</p>
-#                     </div>
-#                     """, unsafe_allow_html=True)
-#                 
-# =============================================================================
-                with stat_col2:
-                    st.markdown(f"""
-                    <div class="stats-card">
-                        <h3>{color_stats['brightness_category']}</h3>
-                        <p>Overall Tone</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with stat_col3:
-                    st.markdown(f"""
-                    <div class="stats-card">
-                        <h3>{encoding_mode}</h3>
-                        <p>Encoding Used</p>
-                    </div>
-                    """, unsafe_allow_html=True)
+                stats_container = st.container()
+                with stats_container:
+                    stat_col1, stat_col2, stat_col3 = st.columns(3, gap="medium")
+                    
+                    with stat_col1:
+                        st.markdown(f"""
+                        <div class="stats-card">
+                            <h3>{color_stats['count']}</h3>
+                            <p>Color Stripes</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    
+                    with stat_col2:
+                        st.markdown(f"""
+                        <div class="stats-card">
+                            <h3>{color_stats['brightness_category']}</h3>
+                            <p>Overall Tone</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    
+                    with stat_col3:
+                        st.markdown(f"""
+                        <div class="stats-card">
+                            <h3>{encoding_mode}</h3>
+                            <p>Encoding Used</p>
+                        </div>
+                        """, unsafe_allow_html=True)
                 
                 # Enhanced color information
                 with st.expander("🔍 Flag Analysis"):
