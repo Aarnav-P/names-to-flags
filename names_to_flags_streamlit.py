@@ -401,7 +401,7 @@ def fig_to_bytes(fig):
                 edgecolor='none',  # No edge color
                 transparent=True)  # Make background transparent
     buf.seek(0)
-    return buf.get
+    return buf.getvalue()
 
 def get_color_stats(flattened_hexstring):
     """Get statistics about the colors"""
