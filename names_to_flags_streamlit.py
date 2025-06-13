@@ -558,7 +558,7 @@ if generate_button:
                 with stat_col1:
                     st.markdown(f"""
                     <div class="stats-card">
-                        <div style="font-size: 2.5rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.5rem;">{color_stats['count']}</div>
+                        <div style="font-size: 2.5rem; font-weight: bold; color: #d4d4d4; text-align: center; margin-bottom: 0.5rem;">{color_stats['count']}</div>
                         <div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); text-align: center;">Color Stripes</div>
                     </div>
                     """, unsafe_allow_html=True)
