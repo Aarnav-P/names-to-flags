@@ -434,7 +434,7 @@ with col4:
     flag_pattern = st.selectbox("", ["Stripes", "Checkerboard", "Diagonal"], label_visibility="collapsed")
 
 with col5:
-    st.markdown("**Color adjustments:**" + create_tooltip("Choose how to modify the generated colors for better visibility."), unsafe_allow_html=True)
+    st.markdown("**Colou0r adjustments:**" + create_tooltip("Choose how to modify the generated colors for better visibility."), unsafe_allow_html=True)
     color_adjustment = st.selectbox("", ["None", "Brighten", "Darken", "Boost Saturation"], label_visibility="collapsed")
 
 # Second row for adjustment amount
@@ -459,7 +459,9 @@ st.markdown('</div>', unsafe_allow_html=True)
 col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
 with col_btn2:
     generate_button = st.button("🎨 Generate Your Unique Flag", type="primary", use_container_width=True)
-
+with st.container():
+    st.markdown('<p style="margin-bottom: 0.5rem; color: white;">Disclaimer: Your flag will be uniquely (but might not be conventionally) beautiful! Use "Colour Adjustments"" to make tweaks (though you will lose the uniqueness).</p>', unsafe_allow_html=True)
+    
 # Generate flag
 if generate_button:
     if not name_input:
@@ -514,13 +516,21 @@ if generate_button:
                 stat_col1, stat_col2, stat_col3 = st.columns(3)
                 
                 with stat_col1:
-                    st.markdown(f"""
-                    <div class="stats-card">
-                        <h3>{color_stats['count']}</h3>
-                        <p>Color Stripes</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
+                    st.metric(
+                        label="Color Stripes",
+                        value=color_stats['count'],
+                        help="Number of color bands in your flag")
+
+# =============================================================================
+#                 with stat_col1:
+#                     st.markdown(f"""
+#                     <div class="stats-card">
+#                         <h3>{color_stats['count']}</h3>
+#                         <p>Color Stripes</p>
+#                     </div>
+#                     """, unsafe_allow_html=True)
+#                 
+# =============================================================================
                 with stat_col2:
                     st.markdown(f"""
                     <div class="stats-card">
@@ -590,7 +600,8 @@ st.markdown("""
 <div class="footer-style">
     <h4>🎨 About This Tool</h4>
     <p>Every name is unique. This website converts your lexical fingerprint into a flag to show off.</p>
-    <p>Made using Streamlit • <a href="#" target="_blank">☕ Donate if you enjoy your flag :) </a></p>
-    <p><small>Tip: Bookmark your favourite flags by saving the URL!</small></p>
+    <p>Made using <a href='https://streamlit.io/' Streamlit </a> • Your flag is 100% free :) </p>
+    <p>Designed and created by Aarnav Panda, please send feedback and ideas to aarnavpanda11@gmail.com
+    <p><small>Tip: Bookmark this URL to quickly generate a flag for any situation!</small></p>
 </div>
 """, unsafe_allow_html=True)
