@@ -334,7 +334,7 @@ def string_to_hex(input_string, mode):
     seed_string = ''.join(hexstring)
     return hexstring, seed_string
 
-def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400):
+def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=600, height=400, show_title=True):
     """Create flag image using matplotlib with different patterns"""
     # Set matplotlib to use a non-interactive backend
     #plt.ioff()
@@ -380,16 +380,28 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
     
     ax.axis('off')
     ax.imshow(flag)  
-    plt.tight_layout()
+        
+    # Only show title for display version
+    if show_title:
+        ax.set_title(f'Flag for: {name}', color='white', fontsize=16, pad=20)
+    
+    if not show_title:
+        plt.tight_layout(pad=0)
+    else:
+        plt.tight_layout()
     return fig
 
 def fig_to_bytes(fig):
-    """Convert matplotlib figure to bytes for download"""
+    """Convert matplotlib figure to bytes for download with no borders"""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=300, bbox_inches='tight', 
-                facecolor='white', edgecolor='white')  # Changed to white
+    fig.savefig(buf, format='png', dpi=300, 
+                bbox_inches='tight',
+                pad_inches=0,  # Remove all padding
+                facecolor='none',  # Transparent background
+                edgecolor='none',  # No edge color
+                transparent=True)  # Make background transparent
     buf.seek(0)
-    return buf.getvalue()
+    return buf.get
 
 def get_color_stats(flattened_hexstring):
     """Get statistics about the colors"""
@@ -540,7 +552,8 @@ if generate_button:
                 # Enhanced download and stats section
                 col_dl1, col_dl2, col_dl3 = st.columns([1, 2, 1])
                 with col_dl2:
-                    img_bytes = fig_to_bytes(fig)
+                    downloadable_flag = create_flag_image(flattened_hexstring, name_input, stripe_direction, flag_pattern.lower(),show_title=False)
+                    img_bytes = fig_to_bytes(downloadable_flag)
                     st.download_button(
                         label="📥 Download Flag (High Quality PNG)",
                         data=img_bytes,
