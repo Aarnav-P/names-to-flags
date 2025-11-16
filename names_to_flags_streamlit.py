@@ -120,48 +120,8 @@ st.markdown("""
     div[data-testid="column"] .stats-card {
         margin-left: 0;
         margin-right: 0;
-    }
-    
-    /* Make input fields dark themed */
-    div[data-baseweb="input"] {
-        background-color: #2d2d2d !important;
-        border-radius: 10px !important;
-    }
-    
-    input {
-        background-color: #2d2d2d !important;
-        color: #f8f8f8 !important;
-    }
-    
-    textarea {
-        background-color: #2d2d2d !important;
-        color: #f8f8f8 !important;
-    }
-    
-    .stTextInput > div > div > input {
-        background-color: #2d2d2d !important;
-        color: #f8f8f8 !important;
-    }
-    
-    .stSelectbox > div > div {
-        background-color: #2d2d2d !important;
-        color: #f8f8f8 !important;
-    }
+    }      
 
-    /* Global dark background for all inputs */
-    div.stTextInput > div > div {
-        background-color: #2d2d2d !important;
-        border: 1px solid #444 !important;
-        border-radius: 10px !important;
-        box-shadow: none !important;
-    }
-    
-    div.stSelectbox > div > div {
-        background-color: #2d2d2d !important;
-        border: 1px solid #444 !important;
-        border-radius: 10px !important;
-        box-shadow: none !important;
-    }
     
     div[data-testid="stForm"] {
         background-color: transparent !important;
@@ -172,21 +132,17 @@ st.markdown("""
         box-shadow: none !important;
         border: none !important;
     }
-    
-    /* Optional: darken the whole app container */
-    .css-18e3th9 {
-        background-color: #121212 !important;
-    }
-
+            
     .footer-style {
     text-align: center;
     padding: 2.5rem;
-    background: linear-gradient(90deg, var(#2d2d2d) 0%, var(#4a4a4a) 100%);
+    background: linear-gradient(90deg, #2d2d2d 0%, #4a4a4a 100%);
     border-radius: 20px;
     margin-top: 3rem;
-    color: var(#f8f8f8);
+    color: #f8f8f8;
     box-shadow: 0 8px 32px rgba(45, 45, 45, 0.3);
-    border: 2px solid var(#1a1a1a);
+    border: 2px solid #1a1a1a;
+
 }
 </style>
 """, unsafe_allow_html=True)
@@ -366,7 +322,7 @@ def create_flag_image(flattened_hexstring, name, mode, pattern="stripes", width=
                 flag[:, i*stripe_width:(i+1)*stripe_width, :] = colour_array[i]
     
     elif pattern == "checkerboard":
-        block_size = min(width // 8, height // 8)
+        block_size = max(1, min(width // 8, height // 8))
         for y in range(0, height, block_size):
             for x in range(0, width, block_size):
                 color_idx = ((x // block_size) + (y // block_size)) % colors_count
@@ -448,6 +404,26 @@ with st.expander("How it works & Tips"):
     - **Reproducible**: Same input always creates the same flag
     """)
 
+# Sample examples with better presentation
+
+st.subheader("Try these examples:")
+st.markdown("Click any example to see how different inputs create unique flags:")
+
+examples = [
+    "John_Smith",
+    "Leonhard_Euler",  
+    "織田_信長",
+    "⛰️😸☕"
+]
+
+
+cols = st.columns(2)
+for i, example in enumerate(examples):
+    with cols[i % 2]:
+        if st.button(f"{example}", key=f"example_{i}", use_container_width=True):
+            st.session_state["name_input"] = example
+            st.session_state["generate_flag_permission"] = True 
+
 # Input section with better layout
 with st.container():
     st.markdown('<h3 style="margin-bottom: 0.5rem; color: white;">Enter your name</h3>', unsafe_allow_html=True)
@@ -457,7 +433,8 @@ col1, col2 = st.columns([2, 1])
 with col1:
     name_input = st.text_input(
         "Enter a name or text:", 
-        placeholder="e.g., Robert_Fripp, ଆର୍ନଭ୍_ପଣ୍ଡା, King_of_Pirates"
+        placeholder="e.g., Jacket_Potato, ଆର୍ନଭ୍_ପଣ୍ଡା, Boaty_McBoatface",
+        key="name_input"
     )
 
 with col2:
@@ -514,6 +491,10 @@ with st.container():
     
 # Generate flag
 if generate_button:
+   st.session_state["generate_flag_permission"] = True 
+
+if st.session_state.get("generate_flag_permission"):
+    # your flag generation code here
     if not name_input:
         st.warning("⚠️ Please enter a name or text first!")
     else:
@@ -616,26 +597,9 @@ if generate_button:
             except Exception as e:
                 st.error(f"❌ An error occurred: {str(e)}")
                 st.error("Please check your input and try again.")
-
-# Sample examples with better presentation
-if not name_input:
-    st.subheader("Try these examples:")
-    st.markdown("Click any example to see how different inputs create unique flags:")
     
-    examples = [
-        "Nico",
-        "Leonhard_Euler",  
-        "織田 信長",
-        "User123", 
-        "⛰️😸☕"
-    ]
-    
-    cols = st.columns(2)
-    for i, example in enumerate(examples):
-        with cols[i % 2]:
-            if st.button(f"**{example}**", key=f"example_{i}", use_container_width=True):
-                st.experimental_set_query_params(example=example)
-                st.rerun()
+    # reset the trigger so it doesn’t keep generating every rerun
+    st.session_state["auto_generate"] = False
 
 # Enhanced footer
 st.markdown("---")
