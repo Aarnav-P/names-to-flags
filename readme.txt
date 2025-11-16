@@ -1,8 +1,12 @@
 # Personal_Flags
 The goal of this project is to create a deployment of a python program into a web application.  
 The motivation is that I had a fun idea, and it would be nice to learn how to create web apps for future fun ideas.  
-The work started around July '25, and I have decided to put it on Git.  
-  
+The work started around July '25, and I have decided to put it on Git. 
+
+The Streamlit version of the website is fully functional, and only requires some additional features!
+The ground up version using Flask is significantly harder for me, and is on hold.
+
+Flask deployment:
 Progress:  
 \> Basic website has been built   
 \> html structure is created, with parent and child templates  
