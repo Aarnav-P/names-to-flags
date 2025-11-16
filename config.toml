@@ -1,0 +1,7 @@
+[theme]
+base="dark"               # Use Streamlit's dark theme
+primaryColor="#667eea"    # Accent color (buttons, sliders, etc.)
+backgroundColor="#0E1117" # App background
+secondaryBackgroundColor="#1A1A1A" # Containers, panels
+textColor="#FAFAFA"       # Main text color
+font="sans serif"         # Options: "sans serif", "serif", "monospace"
